@@ -284,7 +284,7 @@ kubectl apply -f service.yml
 ```
 
 
-Step 9 - Bonus - Create a LoadBalancer service for your deployments
+## Step 8 - Bonus - Create a LoadBalancer service for your deployments
 
 
 
