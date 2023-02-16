@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: name of the container
+      image: ...your docker image...
+      ports:
+        - containerPort: port of the container
+          name: name of the port
