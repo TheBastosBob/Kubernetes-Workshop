@@ -172,9 +172,99 @@ A persistent volume is a storage that is not linked to a pod.
 
 You can create a persistent volume with the yaml file.
 
+little help:
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <name_of_the_volume>
+spec:
+    capacity:
+        storage: <size_of_the_volume>
+    accessModes:
+        - <access_mode>
+    persistentVolumeReclaimPolicy: Retain
+    hostPath:
+        path: <path_to_the_volume>
+```
+
+you can find the doc [here](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+
+When you are done, you can create the persistent volume with this command:
+```bash
+kubectl apply -f persistent-volume.yml
+```
+
+### Create a persistent volume claim
+
+A persistent volume claim is a claim for a persistent volume.
+
+You can create a persistent volume claim with the yaml file.
+
+little help:
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: <name_of_the_claim>
+spec:
+    accessModes:
+        - <access_mode>
+    resources:
+        requests:
+        storage: <size_of_the_claim>
+```
+
+you can find the doc [here](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims).
+
+When you are done, you can create the persistent volume claim with this command:
+```bash
+kubectl apply -f persistent-volume-claim.yml
+```
+
+### Create a deployment with a persistent volume
+
+You can create a deployment with a persistent volume with the yaml file.
+
+little help:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <name_of_the_deployment>
+spec:
+    replicas: <number_of_replicas>
+    selector:
+        matchLabels:
+        app: <name_of_the_deployment>
+    template:
+        metadata:
+        labels:
+            app: <name_of_the_deployment>
+        spec:
+        containers:
+        - name: <name_of_the_container>
+            image: <image_of_the_container>
+            volumeMounts:
+            - name: <name_of_the_volume>
+            mountPath: <path_to_the_volume>
+        volumes:
+        - name: <name_of_the_volume>
+            persistentVolumeClaim:
+            claimName: <name_of_the_claim>
+```
+
+you can find the doc [here](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims).
+
+When you are done, you can create the deployment with this command:
+```bash
+kubectl apply -f deployment-with-persistent-volume.yml
+```
 
 
-## Step 8 - Open the deployment to the outside world (hard way)
+
+
+## Step 7 - Open the deployment to the outside world (hard way)
 
 ### Create a service
 
@@ -192,6 +282,9 @@ When you are done, you can create the service with this command:
 ```bash
 kubectl apply -f service.yml
 ```
+
+
+Step 9 - Bonus - Create a LoadBalancer service for your deployments
 
 
 
